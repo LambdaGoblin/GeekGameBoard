@@ -187,7 +187,7 @@ CGImageRef GetCGImageFromPasteboard( NSPasteboard *pb, id<NSDraggingInfo>dragInf
         }
     } else {
         // Else look for an image type:
-        NSString *type = [pb availableTypeFromArray: [NSImage imageUnfilteredPasteboardTypes]];
+        NSString *type = [pb availableTypeFromArray: [NSImage imageUnfilteredTypes]];
         if( type ) {
             NSData *data = [pb dataForType: type];
             src = CGImageSourceCreateWithData((CFDataRef)data, NULL);

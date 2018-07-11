@@ -24,6 +24,7 @@
 #import "Game.h"
 #import "Player.h"
 #import "QuartzUtils.h"
+#import "BitHolder.h"
 
 
 #ifdef TARGET_OS_IPHONE

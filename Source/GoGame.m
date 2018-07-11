@@ -220,7 +220,7 @@
     
     NSUInteger cap0=_captured[0].numberOfBits, cap1=_captured[1].numberOfBits;
     if( cap0 || cap1 )
-        [stateString appendFormat: @",%i,%i", cap0,cap1];
+        [stateString appendFormat: @",%ld,%ld", (unsigned long)cap0, (unsigned long)cap1];
     return stateString;
 }
 

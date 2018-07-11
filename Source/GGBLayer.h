@@ -17,7 +17,7 @@
 extern NSString* const GGBLayerStyleChangedNotification;
 
 
-@interface GGBLayer : CALayer <NSCopying>
+@interface GGBLayer : CALayer <NSCopying, CAAnimationDelegate>
 {
     CABasicAnimation *_curAnimation;
     NSMutableDictionary *_styleDict;

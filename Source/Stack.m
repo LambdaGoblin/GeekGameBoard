@@ -70,7 +70,7 @@
 
 - (void) setNumberOfBits: (NSUInteger)n
 {
-    NSAssert2(n<=_bits.count,@"Cannot increase numberOfBits (from %u to %u)", _bits.count,n);
+    NSAssert2(n<=_bits.count,@"Cannot increase numberOfBits (from %ld to %ld)", (unsigned long)_bits.count, (unsigned long)n);
     while( _bits.count > n )
         [self removeBit: self.topBit];
 }

@@ -86,7 +86,7 @@ static NSString* sCurrentGameName = @"CheckersGame";
     srandomdev();
     
     // BoardView supports receiving dragged images, but you have to register for them:
-    [self registerForDraggedTypes: [NSImage imagePasteboardTypes]];
+    [self registerForDraggedTypes: [NSImage imageTypes]];
     [self registerForDraggedTypes: [NSArray arrayWithObject: NSFilenamesPboardType]];
     
     CGRect bounds = self.layer.bounds;
