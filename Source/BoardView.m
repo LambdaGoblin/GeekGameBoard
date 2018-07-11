@@ -235,7 +235,7 @@
 - (CGPoint) _convertPointFromWindowToLayer: (NSPoint)locationInWindow
 {
     NSPoint where = [self convertPoint: locationInWindow fromView: nil];    // convert to view coords
-    where = [self convertPointToBase: where];                               // then to layer base coords
+    // where = [self convertPointToBacking: where];                               // then to layer base coords
     return [self.layer convertPoint: NSPointToCGPoint(where)                // then to transformed layer coords
                           fromLayer: self.layer.superlayer];
 }
