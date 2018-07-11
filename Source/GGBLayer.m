@@ -356,7 +356,7 @@ void EndDisableAnimations(void)
 } 
 
 
-void ChangeSuperlayer( CALayer *layer, CALayer *newSuperlayer, int index )
+void ChangeSuperlayer( CALayer *layer, CALayer *newSuperlayer, NSInteger index )
 {
     // Disable actions, else the layer will move to the wrong place and then back!
     [CATransaction flush];
@@ -369,7 +369,7 @@ void ChangeSuperlayer( CALayer *layer, CALayer *newSuperlayer, int index )
     [layer removeFromSuperlayer];
     layer.position = pos;
     if( index >= 0 )
-        [newSuperlayer insertSublayer: layer atIndex: index];
+        [newSuperlayer insertSublayer: layer atIndex: (unsigned)index];
     else
         [newSuperlayer addSublayer: layer];
     [layer release];

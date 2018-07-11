@@ -57,7 +57,7 @@ static CATransform3D kFaceUpTransform, kFaceDownTransform;
 + (void) setCardSize: (CGSize)size  {sCardSize = size;}
 
 
-- (id) initWithSerialNumber: (int)serial position: (CGPoint)pos
+- (id) initWithSerialNumber: (NSInteger)serial position: (CGPoint)pos
 {
     self = [super init];
     if (self != nil) {
@@ -85,7 +85,7 @@ static CATransform3D kFaceUpTransform, kFaceDownTransform;
 
 - (NSString*) description
 {
-    return [NSString stringWithFormat: @"%@[#%i]",self.class,_serialNumber];
+    return [NSString stringWithFormat: @"%@[#%ld]", self.class, (unsigned long)_serialNumber];
 }
 
 

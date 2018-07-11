@@ -58,7 +58,7 @@ extern NSString* const GGBLayerStyleChangedNotification;
 
 
 /** Moves a layer from one superlayer to another, without changing its position onscreen. */
-void ChangeSuperlayer( CALayer *layer, CALayer *newSuperlayer, int index );
+void ChangeSuperlayer( CALayer *layer, CALayer *newSuperlayer, NSInteger index );
 
 /** Removes a layer from its superlayer without any fade-out animation. */
 void RemoveImmediately( CALayer *layer );

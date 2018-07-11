@@ -1,25 +1,25 @@
 /*  This code is based on Apple's "GeekGameBoard" sample code, version 1.0.
-    http://developer.apple.com/samplecode/GeekGameBoard/
-    Copyright © 2007 Apple Inc. Copyright © 2008 Jens Alfke. All Rights Reserved.
-
-    Redistribution and use in source and binary forms, with or without modification, are permitted
-    provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice, this list of conditions
-      and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list of
-      conditions and the following disclaimer in the documentation and/or other materials provided
-      with the distribution.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
-    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND 
-    FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRI-
-    BUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
-    THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ http://developer.apple.com/samplecode/GeekGameBoard/
+ Copyright © 2007 Apple Inc. Copyright © 2008 Jens Alfke. All Rights Reserved.
+ 
+ Redistribution and use in source and binary forms, with or without modification, are permitted
+ provided that the following conditions are met:
+ 
+ * Redistributions of source code must retain the above copyright notice, this list of conditions
+ and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of
+ conditions and the following disclaimer in the documentation and/or other materials provided
+ with the distribution.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRI-
+ BUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+ THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 #import "BoardView.h"
 #import "Bit.h"
 #import "BitHolder.h"
@@ -66,7 +66,7 @@
         CATransform3D pers = CATransform3DIdentity;
         pers.m34 = 1.0/-2000;
         t = CATransform3DConcat(t, pers);
-        t = CATransform3DConcat(t, CATransform3DMakeTranslation(size.width/2, 
+        t = CATransform3DConcat(t, CATransform3DMakeTranslation(size.width/2,
                                                                 size.height*(0.25 + 0.05*sin(2*_perspective)),
                                                                 0));
         self.layer.borderWidth = 3;
@@ -115,7 +115,7 @@
     // Tell the game to set up the board:
     _game.tablePerspectiveAngle = _perspective;
     _game.table = _table;
-
+    
     [self.layer addSublayer: _table];
     [_table release];
 }
@@ -175,7 +175,7 @@
     if( self.fullScreenView.isInFullScreenMode ) {
         [self.fullScreenView exitFullScreenModeWithOptions: nil];
     } else {
-        [self.fullScreenView enterFullScreenMode: self.window.screen 
+        [self.fullScreenView enterFullScreenMode: self.window.screen
                                      withOptions: nil];
     }
     //[self createGameBoard];
@@ -250,8 +250,8 @@ static BOOL layerIsDropTarget( CALayer* layer ) {return [layer respondsToSelecto
 
 
 /** Locates the layer at a given point in window coords.
-    If the leaf layer doesn't pass the layer-match callback, the nearest ancestor that does is returned.
-    If outOffset is provided, the point's position relative to the layer is stored into it. */
+ If the leaf layer doesn't pass the layer-match callback, the nearest ancestor that does is returned.
+ If outOffset is provided, the point's position relative to the layer is stored into it. */
 - (CALayer*) hitTestPoint: (NSPoint)locationInWindow
          forLayerMatching: (LayerMatchCallback)match
                    offset: (CGPoint*)outOffset
@@ -260,8 +260,8 @@ static BOOL layerIsDropTarget( CALayer* layer ) {return [layer respondsToSelecto
     CALayer *layer = [_table hitTest: where];
     while( layer ) {
         if( match(layer) ) {
-            CGPoint bitPos = [self.layer convertPoint: layer.position 
-                              fromLayer: layer.superlayer];
+            CGPoint bitPos = [self.layer convertPoint: layer.position
+                                            fromLayer: layer.superlayer];
             if( outOffset )
                 *outOffset = CGPointMake( bitPos.x-where.x, bitPos.y-where.y);
             return layer;
@@ -286,7 +286,7 @@ static BOOL layerIsDropTarget( CALayer* layer ) {return [layer respondsToSelecto
     BOOL placing = NO;
     _dragStartPos = ev.locationInWindow;
     _dragBit = (Bit*) [self hitTestPoint: _dragStartPos
-                        forLayerMatching: layerIsBit 
+                        forLayerMatching: layerIsBit
                                   offset: &_dragOffset];
     
     if( ! _dragBit ) {
@@ -359,14 +359,14 @@ static BOOL layerIsDropTarget( CALayer* layer ) {return [layer respondsToSelecto
         where.y += _dragOffset.y;
         
         CGPoint newPos = [_dragBit.superlayer convertPoint: where fromLayer: self.layer];
-
+        
         [CATransaction flush];
         [CATransaction begin];
         [CATransaction setValue:(id)kCFBooleanTrue
                          forKey:kCATransactionDisableActions];
         _dragBit.position = newPos;
         [CATransaction commit];
-
+        
         // Find what it's over:
         [self _findDropTarget: pos];
     }
@@ -407,11 +407,11 @@ static BOOL layerIsDropTarget( CALayer* layer ) {return [layer respondsToSelecto
             [self mouseDragged: ev];
             _dropTarget.highlighted = NO;
             _dragBit.pickedUp = NO;
-
+            
             // Is the move legal?
-            if( _dropTarget && [_dropTarget dropBit: _dragBit
-                                            atPoint: [(CALayer*)_dropTarget convertPoint: _dragBit.position 
-                                                                            fromLayer: _dragBit.superlayer]] ) {
+            CGPoint convertedPoint = [(CALayer*)_dropTarget convertPoint: _dragBit.position
+                                                               fromLayer: _dragBit.superlayer];
+            if (_dropTarget && [_dropTarget dropBit: _dragBit atPoint: convertedPoint]) {
                 // Yes, notify the interested parties:
                 [_oldHolder draggedBit: _dragBit to: _dropTarget];
                 [_game bit: _dragBit movedFrom: _oldHolder to: _dropTarget];
@@ -435,7 +435,7 @@ static BOOL layerIsDropTarget( CALayer* layer ) {return [layer respondsToSelecto
             if( ! [_game clickedBit: _dragBit] )
                 NSBeep();
         }
-
+        
         _dropTarget = nil;
         _dragBit = nil;
         [NSCursor pop];
@@ -455,7 +455,7 @@ static BOOL layerIsDropTarget( CALayer* layer ) {return [layer respondsToSelecto
 
 
 // subroutine to call the target
-static int tell( id target, SEL selector, id arg, int defaultValue )
+static NSInteger tell( id target, SEL selector, id arg, NSInteger defaultValue )
 {
     if( target && [target respondsToSelector: selector] )
         return (ssize_t) [target performSelector: selector withObject: arg];
@@ -476,11 +476,11 @@ static int tell( id target, SEL selector, id arg, int defaultValue )
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
     CALayer *target = [self hitTestPoint: [sender draggingLocation]
-                        forLayerMatching: layerIsDropTarget 
+                        forLayerMatching: layerIsDropTarget
                                   offset: NULL];
     if( target == _viewDropTarget ) {
         if( _viewDropTarget )
-            _viewDropOp = tell(_viewDropTarget,@selector(draggingUpdated:),sender,_viewDropOp);
+            _viewDropOp = tell(_viewDropTarget,@selector(draggingUpdated:), sender, _viewDropOp);
     } else {
         tell(_viewDropTarget,@selector(draggingExited:),sender,0);
         _viewDropTarget = target;

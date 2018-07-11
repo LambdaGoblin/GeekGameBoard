@@ -96,7 +96,7 @@
 + (NSArray*) keyPathsForValuesAffectingCurrent {return [NSArray arrayWithObject: @"game.currentPlayer"];}
 
 
-- (int) index
+- (NSInteger) index
 {
     return [_game.players indexOfObjectIdenticalTo: self];
 }

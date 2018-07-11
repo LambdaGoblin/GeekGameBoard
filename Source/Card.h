@@ -29,7 +29,7 @@
 @interface Card : Bit 
 {
     @private
-    int _serialNumber;
+    NSInteger _serialNumber;
     GGBLayer *_front, *_back;
     BOOL _faceUp;
 }
@@ -41,9 +41,9 @@
 + (CGSize) cardSize;
 + (void) setCardSize: (CGSize)size;
 
-- (id) initWithSerialNumber: (int)serial position: (CGPoint)pos;
+- (id) initWithSerialNumber: (NSInteger)serial position: (CGPoint)pos;
 
-@property (readonly) int serialNumber;
+@property (readonly) NSInteger serialNumber;
 
 /** Cards can be face-up or face-down, of course. */
 @property BOOL faceUp;

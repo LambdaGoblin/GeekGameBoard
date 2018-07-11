@@ -89,7 +89,7 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
 
 - (NSString*) description
 {
-    return [NSString stringWithFormat: @"%@[%@, #%i, %@]", self.class, _game.class, self.turnNumber, _move];
+    return [NSString stringWithFormat: @"%@[%@, #%ld, %@]", self.class, _game.class, (unsigned long)self.turnNumber, _move];
 }
 
 
@@ -97,10 +97,10 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
             replaying=_replaying;
 
 
-- (unsigned) turnNumber     {return [_game.turns indexOfObjectIdenticalTo: self];}
-- (BOOL) isLatestTurn       {return _game.turns.lastObject == self;}
-- (Player*) nextPlayer      {return _player ?_player.nextPlayer :[_game.players objectAtIndex: 0];}
-- (TurnStatus) status       {return _status;}
+- (NSUInteger) turnNumber { return [_game.turns indexOfObjectIdenticalTo: self]; }
+- (BOOL) isLatestTurn { return _game.turns.lastObject == self; }
+- (Player*) nextPlayer { return _player ? _player.nextPlayer : [_game.players objectAtIndex: 0]; }
+- (TurnStatus) status { return _status; }
 
 - (void) setStatus: (TurnStatus)status
 {
@@ -141,7 +141,7 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
 
 - (Turn*) previousTurn
 {
-    unsigned n = self.turnNumber;
+    NSUInteger n = self.turnNumber;
     if( n > 0 )
         return [_game.turns objectAtIndex: n-1];
     else
@@ -150,7 +150,7 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
 
 - (Turn*) nextTurn
 {
-    unsigned n = self.turnNumber;
+    NSUInteger n = self.turnNumber;
     if( n+1 < _game.turns.count )
         return [_game.turns objectAtIndex: n+1];
     else

@@ -90,7 +90,7 @@
 }
 
 
-- (void) x_repositionBit: (Bit*)bit forIndex: (int)i
+- (void) x_repositionBit: (Bit*)bit forIndex: (NSInteger)i
 {
     bit.position = CGPointMake(_startPos.x + _spacing.width *(i%_wrapInterval) + _wrapSpacing.width *(i/_wrapInterval),
                                _startPos.y + _spacing.height*(i%_wrapInterval) + _wrapSpacing.height*(i/_wrapInterval));
@@ -102,7 +102,7 @@
         for( Bit *subBit in [(DraggedStack*)bit bits] )
             [self addBit: subBit];
     } else {
-        int n = _bits.count;
+        NSInteger n = _bits.count;
         [_bits addObject: bit];
         ChangeSuperlayer(bit, self, n);
         [self x_repositionBit: bit forIndex: n];

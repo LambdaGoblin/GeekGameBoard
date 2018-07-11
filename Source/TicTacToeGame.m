@@ -29,7 +29,7 @@
 
 @implementation TicTacToeGame
 
-- (Piece*) pieceForPlayer: (int)playerNumber
+- (Piece*) pieceForPlayer: (NSInteger)playerNumber
 {
     Piece *p = [[Piece alloc] initWithImageNamed: (playerNumber ? @"O.tiff" :@"X.tiff")
                                            scale: 80];

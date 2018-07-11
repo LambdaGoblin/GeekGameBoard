@@ -241,9 +241,9 @@
     Turn *latest = self.latestTurn;
     if( latest.player.local && latest.status < kTurnComplete ) {
         // Automatically skip from latest finished turn, since board state is the same:
-        unsigned latestTurnNo = self.maxTurnNo;
+        NSUInteger latestTurnNo = self.maxTurnNo;
         if( _currentTurnNo==latestTurnNo-1 ) {
-            NSLog(@"okToMove: skipping from turn %i to %i",_currentTurnNo,latestTurnNo);
+            NSLog(@"okToMove: skipping from turn %ld to %ld", (unsigned long)_currentTurnNo, (unsigned long)latestTurnNo);
             self.currentTurnNo = latestTurnNo;
         }
         if( _currentTurnNo==latestTurnNo )
@@ -302,7 +302,7 @@
     return _currentTurnNo == _turns.count-1;
 }
 
-- (unsigned) maxTurnNo
+- (NSInteger) maxTurnNo
 {
     return _turns.count-1;
 }
@@ -310,7 +310,7 @@
 + (NSArray*) keyPathsForValuesAffectingIsLatestTurn {return [NSArray arrayWithObjects: @"currentTurnNo",@"turns",nil];}
 + (NSArray*) keyPathsForValuesAffectingMaxTurnNo    {return [NSArray arrayWithObjects: @"turns",nil];}
 
-- (unsigned) currentTurnNo
+- (NSInteger) currentTurnNo
 {
     return _currentTurnNo;
 }
@@ -320,10 +320,10 @@
 #pragma mark REPLAYING TURNS:
 
 
-- (void) setCurrentTurnNo: (unsigned)turnNo
+- (void) setCurrentTurnNo: (NSInteger)turnNo
 {
     NSParameterAssert(turnNo<=self.maxTurnNo);
-    unsigned oldTurnNo = _currentTurnNo;
+    NSUInteger oldTurnNo = _currentTurnNo;
     if( turnNo != oldTurnNo ) {
         if( _table ) {
             Turn *turn = [_turns objectAtIndex: turnNo];
@@ -332,7 +332,7 @@
                 state = turn.previousTurn.boardState;
             else
                 state = turn.boardState;
-            NSAssert1(state,@"empty boardState at turn #%i",turnNo);
+            NSAssert1(state,@"empty boardState at turn #%ld", (unsigned long)turnNo);
             _currentTurnNo = turnNo;
             if( turnNo==oldTurnNo+1 ) {
                 NSString *move = turn.move;
@@ -457,7 +457,7 @@
 }
 
 
-- (CGImageRef) iconForPlayer: (int)playerIndex
+- (CGImageRef) iconForPlayer: (NSInteger)playerIndex
 {
     return nil;
 }

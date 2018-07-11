@@ -202,7 +202,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
 - (NSArray*) cells
 {
     NSMutableArray *cells = [[_cells mutableCopy] autorelease];
-    for( int i=cells.count-1; i>=0; i-- )
+    for( NSInteger i=cells.count-1; i>=0; i-- )
         if( [cells objectAtIndex: i] == [NSNull null] )
             [cells removeObjectAtIndex: i];
     return cells;
@@ -469,7 +469,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
 }
 
 
-- (NSSet*) getGroup: (int*)outLiberties
+- (NSSet*) getGroup: (NSInteger *)outLiberties
 {
     NSMutableSet *group=[NSMutableSet set], *liberties=nil;
     if( outLiberties )

@@ -74,8 +74,8 @@
 }
 
 
-- (CardRank) rank       {return (self.serialNumber-1)%13 + 1;}
-- (CardSuit) suit       {return (self.serialNumber-1)/13;}
+- (CardRank) rank { return (self.serialNumber-1)%13 + 1; }
+- (CardSuit) suit { return (CardSuit)(self.serialNumber-1)/13; }
 
 - (CardColor) color
 {

@@ -125,7 +125,7 @@ typedef struct {
 
 /** Go-style group detection. Returns the set of contiguous GridCells that have pieces of the same
    owner as this one, and optionally a count of the number of "liberties", or adjacent empty cells. */
-- (NSSet*) getGroup: (int*)outLiberties;
+- (NSSet*) getGroup: (NSInteger *)outLiberties;
 
 // protected:
 - (void) drawInParentContext: (CGContextRef)ctx fill: (BOOL)fill;

@@ -205,7 +205,7 @@ CGImageRef GetCGImageFromPasteboard( NSPasteboard *pb, id<NSDraggingInfo>dragInf
 
 CGImageRef CreateScaledImage( CGImageRef srcImage, CGFloat scale )
 {
-    int width = CGImageGetWidth(srcImage), height = CGImageGetHeight(srcImage);
+    size_t width = CGImageGetWidth(srcImage), height = CGImageGetHeight(srcImage);
     if( scale > 0 ) {
         if( scale >= 4.0 )
             scale /= MAX(width,height);             // interpret scale as target dimensions
@@ -299,8 +299,8 @@ static void releasePatternImage( void *info )
 CGPatternRef CreateImagePattern( CGImageRef image )
 {
     NSCParameterAssert(image);
-    int width = CGImageGetWidth(image);
-    int height = CGImageGetHeight(image);
+    size_t width = CGImageGetWidth(image);
+    size_t height = CGImageGetHeight(image);
     static const CGPatternCallbacks callbacks = {0, &drawPatternImage, &releasePatternImage};
     return CGPatternCreate (image,
                             CGRectMake (0, 0, width, height),

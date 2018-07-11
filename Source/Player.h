@@ -29,7 +29,7 @@
 @property (readonly) CGImageRef icon;                       // An icon to display (calls game.iconForPlayer:)
 
 @property (readonly) Game *game;
-@property (readonly) int index;                             // Player's index in the Game's -players array
+@property (readonly) NSInteger index;                             // Player's index in the Game's -players array
 @property (readwrite,getter=isLocal) BOOL local;            // Is player a human at this computer? (Defaults to YES)
 @property (readonly, getter=isCurrent) BOOL current;        // Is it this player's turn?
 @property (readonly, getter=isFriendly) BOOL friendly;      // Is this player the current player or an ally?

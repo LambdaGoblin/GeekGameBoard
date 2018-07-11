@@ -118,8 +118,8 @@ static NSString* sCurrentGameName = @"CheckersGame";
 {
     Game *game = self.game;
     if( object == game ) {
-        NSLog(@"maxTurnNo = %u, currentTurnNo = %u", 
-              self.game.maxTurnNo,self.game.currentTurnNo);
+        NSLog(@"maxTurnNo = %ld, currentTurnNo = %ld",
+              (unsigned long)self.game.maxTurnNo, (unsigned long)self.game.currentTurnNo);
         NSLog(@"Game state = '%@'", self.game.currentTurn.boardState);
 
         _turnSlider.maxValue = self.game.maxTurnNo;

@@ -23,7 +23,7 @@
 #import "Card.h"
 
 typedef enum {
-    kSuitClubs,
+    kSuitClubs = 0,
     kSuitDiamonds,
     kSuitHearts,
     kSuitSpades

@@ -55,7 +55,7 @@
     if (self != nil) {
         // Create a full deck of cards:
         NSRange serials = [klass serialNumberRange];
-        for( int i=serials.location; i<NSMaxRange(serials); i++ ) {
+        for (NSInteger i=serials.location; i<NSMaxRange(serials); i++) {
             Card *card = [[klass alloc] initWithSerialNumber: i
                                                     position: CGPointZero];
             [_cards addObject: card];
@@ -125,10 +125,10 @@
 
 - (void) shuffle
 {
-    int n = _cards.count;
+    NSInteger n = _cards.count;
     NSMutableArray *shuffled = [NSMutableArray arrayWithCapacity: n];
     for( ; n > 0; n-- ) {
-        int i = random() % n;
+        NSInteger i = random() % n;
         Card *card = [_cards objectAtIndex: i];
         [shuffled addObject: card];
         [_cards removeObjectAtIndex: i];
@@ -140,7 +140,7 @@
 
 - (void) flip
 {
-    int n = _cards.count;
+    NSInteger n = _cards.count;
     NSMutableArray *flipped = [NSMutableArray arrayWithCapacity: n];
     while( --n >= 0 ) {
         Card *card = [_cards objectAtIndex: n];
@@ -168,7 +168,7 @@
 - (void) addCardAtRandom: (Card*)card
 {
     // Put the card at some random location, but _not_ on top (unless the deck is empty.)
-    int n = _cards.count;
+    NSInteger n = _cards.count;
     if( n==0 )
         [self addCard: card];
     else

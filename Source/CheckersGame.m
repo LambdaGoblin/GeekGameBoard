@@ -61,7 +61,7 @@ static NSMutableDictionary *kPieceStyle1, *kPieceStyle2;
     return self;
 }
 
-- (CGImageRef) iconForPlayer: (int)playerNum
+- (CGImageRef) iconForPlayer: (NSInteger)playerNum
 {
     return GetCGImageNamed( playerNum==0 ?@"Green.png" :@"Red.png" );
 }
@@ -158,7 +158,7 @@ static NSMutableDictionary *kPieceStyle1, *kPieceStyle2;
 - (void) bit: (Bit*)bit movedFrom: (id<BitHolder>)srcHolder to: (id<BitHolder>)dstHolder
 {
     Square *src=(Square*)srcHolder, *dst=(Square*)dstHolder;
-    int playerIndex = self.currentPlayer.index;
+    NSInteger playerIndex = self.currentPlayer.index;
     
     Turn *turn = self.currentTurn;
     if( turn.move.length==0 )

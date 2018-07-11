@@ -112,12 +112,12 @@
     PreloadSound(@"Pop");
 }
 
-- (CGImageRef) iconForPlayer: (int)playerNum
+- (CGImageRef) iconForPlayer: (NSInteger)playerNum
 {
     return GetCGImageNamed( playerNum ?@"ball-white.png" :@"ball-black.png" );
 }
 
-- (Piece*) pieceForPlayer: (int)index
+- (Piece*) pieceForPlayer: (NSInteger)index
 {
     NSString *imageName = index ?@"ball-white.png" :@"ball-black.png";
     CGFloat pieceSize = (int)(_board.spacing.width * 1.0) & ~1;  // make sure it's even
@@ -156,7 +156,7 @@
             return YES;                     // there's an empty space
     // If the piece is surrounded, check the neighboring groups' liberties:
     for( GridCell *c in neighbors ) {
-        int nLiberties;
+        NSInteger nLiberties;
         [c getGroup: &nLiberties];
         if( c.bit.unfriendly ) {
             if( nLiberties <= 1 )
@@ -173,12 +173,12 @@
 - (void) bit: (Bit*)bit movedFrom: (id<BitHolder>)srcHolder to: (id<BitHolder>)dstHolder
 {
     Square *dst=(Square*)dstHolder;
-    int curIndex = self.currentPlayer.index;
+    NSInteger curIndex = self.currentPlayer.index;
     // Check for captured enemy groups:
     BOOL captured = NO;
     for( GridCell *c in dst.neighbors )
         if( c.bit.unfriendly ) {
-            int nLiberties;
+            NSInteger nLiberties;
             NSSet *group = [c getGroup: &nLiberties];
             if( nLiberties == 0 ) {
                 captured = YES;
@@ -250,7 +250,7 @@
         if( nCaptured < curNCaptured )
            _captured[player].numberOfBits = nCaptured;
         else
-            for( int i=curNCaptured; i<nCaptured; i++ )
+            for (NSInteger i=curNCaptured; i<nCaptured; i++)
                 [_captured[player] addBit: [self pieceForPlayer: 1-player]];
     }
 }

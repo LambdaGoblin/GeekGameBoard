@@ -33,7 +33,7 @@
     NSArray *_players;
     Player *_winner;
     NSMutableArray *_turns;
-    unsigned _currentTurnNo;
+    NSUInteger _currentTurnNo;
     NSMutableDictionary *_extraValues;
     BOOL _requireConfirmation;
     CGFloat _tablePerspectiveAngle;
@@ -74,8 +74,8 @@
 
 @property (readonly) NSArray *turns;
 @property (readonly) Turn *currentTurn, *latestTurn;
-@property (readonly) unsigned maxTurnNo;
-@property unsigned currentTurnNo;
+@property (readonly) NSInteger maxTurnNo;
+@property NSInteger currentTurnNo;
 @property (readonly) BOOL isLatestTurn;
 
 /** Check this before the user begins a move action (mouse-down on a bit, etc.)
@@ -90,7 +90,7 @@
 #pragma mark  Methods for subclasses to implement:
 
 /** An icon for a player (usually the same as the image of the player's pieces.) */
-- (CGImageRef) iconForPlayer: (int)playerIndex;
+- (CGImageRef) iconForPlayer: (NSInteger)playerIndex;
 
 
 /** Should return YES if it is legal for the given bit to be moved from its current holder.
