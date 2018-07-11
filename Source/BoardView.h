@@ -66,6 +66,6 @@
 - (IBAction) enterFullScreen: (id)sender;
 
 @property CGSize gameBoardInset;
-- (CGRect) gameBoardFrame;
+@property (NS_NONATOMIC_IOSONLY, readonly) CGRect gameBoardFrame;
 
 @end

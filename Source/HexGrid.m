@@ -27,7 +27,7 @@
 @implementation HexGrid
 
 
-- (id) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
+- (instancetype) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
             spacing: (CGSize)spacing
            position: (CGPoint)pos
 {
@@ -51,7 +51,7 @@
 }
 
 
-- (id) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
+- (instancetype) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
               frame: (CGRect)frame;
 {
     // Compute the horizontal spacing:
@@ -172,7 +172,7 @@
 - (void) setHighlighted: (BOOL)highlighted
 {
     if( highlighted != self.highlighted ) {
-        [super setHighlighted: highlighted];
+        super.highlighted = highlighted;
         [_grid setNeedsDisplay];        // So I'll be asked to redraw myself
     }
 }

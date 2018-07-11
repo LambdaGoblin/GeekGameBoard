@@ -36,10 +36,10 @@
     BOOL _dragAsStacks;    
 }
 
-- (id) initWithStartPos: (CGPoint)startPos spacing: (CGSize)spacing;
+- (instancetype) initWithStartPos: (CGPoint)startPos spacing: (CGSize)spacing;
 
-- (id) initWithStartPos: (CGPoint)startPos spacing: (CGSize)spacing
-           wrapInterval: (int)wrapInterval wrapSpacing: (CGSize)wrapSpacing;
+- (instancetype) initWithStartPos: (CGPoint)startPos spacing: (CGSize)spacing
+           wrapInterval: (int)wrapInterval wrapSpacing: (CGSize)wrapSpacing NS_DESIGNATED_INITIALIZER;
 
 @property CGPoint startPos;                 // Position where first Bit should go
 @property CGSize spacing;                   // Spacing between successive Bits
@@ -64,7 +64,7 @@
     are incorporated into the destination Stack. */
 @interface DraggedStack : Bit
 
-- (id) initWithBits: (NSArray*)bits;
+- (instancetype) initWithBits: (NSArray*)bits NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) NSArray *bits;
 

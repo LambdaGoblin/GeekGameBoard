@@ -48,7 +48,7 @@
     board.allowsCaptures = NO;      // no land-on captures, that is
     board.cellColor = CreateGray(1.0, 0.25);
     board.lineColor = kTranslucentLightGrayColor;
-    board.reversed = ! [[self.players objectAtIndex: 0] isLocal];
+    board.reversed = ! [(self.players)[0] isLocal];
     [board addCellsInHexagon];
 }
 

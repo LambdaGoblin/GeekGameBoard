@@ -29,7 +29,7 @@
 @implementation Dispenser
 
 
-- (id) initWithPrototype: (Bit*)prototype quantity: (unsigned)quantity frame: (CGRect)frame
+- (instancetype) initWithPrototype: (Bit*)prototype quantity: (unsigned)quantity frame: (CGRect)frame
 {
     self = [super init];
     if (self != nil) {

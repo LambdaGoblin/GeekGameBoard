@@ -10,12 +10,12 @@
 @class Game, Player;
 
 
-typedef enum {
+typedef NS_ENUM(unsigned int, TurnStatus) {
     kTurnEmpty,             // No action yet
     kTurnPartial,           // Action taken, but more needs to be done
     kTurnComplete,          // Action complete, but player needs to confirm
     kTurnFinished           // Turn is confirmed and finished
-} TurnStatus;
+};
 
 
 extern NSString* const kTurnCompleteNotification;
@@ -34,8 +34,8 @@ extern NSString* const kTurnCompleteNotification;
     BOOL _replaying;
 }
 
-- (id) initWithPlayer: (Player*)player;
-- (id) initStartOfGame: (Game*)game;
+- (instancetype) initWithPlayer: (Player*)player NS_DESIGNATED_INITIALIZER;
+- (instancetype) initStartOfGame: (Game*)game NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) Game *game;
 @property (readonly) Player *player, *nextPlayer;

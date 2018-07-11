@@ -99,23 +99,23 @@ CGImageRef GetCGImageNamed( NSString *name )
     if( ! sMap )
         sMap = [[NSMutableDictionary alloc] init];
     
-    CGImageRef image = (CGImageRef) [sMap objectForKey: name];
+    CGImageRef image = (CGImageRef) sMap[name];
     if( ! image ) {
         // Hasn't been cached yet, so load it:
         NSString *path;
         if( [name hasPrefix: @"/"] )
             path = name;
         else {
-            NSString *dir = [name stringByDeletingLastPathComponent];
-            name = [name lastPathComponent];
+            NSString *dir = name.stringByDeletingLastPathComponent;
+            name = name.lastPathComponent;
             NSString *ext = name.pathExtension;
-            name = [name stringByDeletingPathExtension];
+            name = name.stringByDeletingPathExtension;
             path = [[NSBundle mainBundle] pathForResource: name ofType: ext inDirectory: dir];
             NSCAssert3(path,@"Couldn't find bundle image resource '%@' type '%@' in '%@'",name,ext,dir);
         }
         image = CreateCGImageFromFile(path);
         NSCAssert1(image,@"Failed to load image from %@",path);
-        [sMap setObject: (id)image forKey: name];
+        sMap[name] = (id)image;
         CGImageRelease(image);
     }
     return image;
@@ -130,10 +130,10 @@ CGColorRef GetCGPatternNamed( NSString *name )         // can be resource name o
     if( ! sMap )
         sMap = [[NSMutableDictionary alloc] init];
     
-    CGColorRef pattern = (CGColorRef) [sMap objectForKey: name];
+    CGColorRef pattern = (CGColorRef) sMap[name];
     if( ! pattern ) {
         pattern = CreatePatternColor( GetCGImageNamed(name) );
-        [sMap setObject: (id)pattern forKey: name];
+        sMap[name] = (id)pattern;
         CGColorRelease(pattern);
     }
     return pattern;
@@ -145,7 +145,7 @@ CGColorRef GetCGPatternNamed( NSString *name )         // can be resource name o
 BOOL CanGetCGImageFromPasteboard( NSPasteboard *pb )
 {
     return [NSImage canInitWithPasteboard: pb] 
-        || [[pb types] containsObject: @"PixadexIconPathPboardType"];
+        || [pb.types containsObject: @"PixadexIconPathPboardType"];
 
     /*if( [[pb types] containsObject: NSFilesPromisePboardType] ) {
      NSArray *fileTypes = [pb propertyListForType: NSFilesPromisePboardType];
@@ -161,7 +161,7 @@ CGImageRef GetCGImageFromPasteboard( NSPasteboard *pb, id<NSDraggingInfo>dragInf
     NSArray *paths = [pb propertyListForType: NSFilenamesPboardType];
     if( paths.count==1 ) {
         // If a file is being dragged, read it:
-        CFURLRef url = (CFURLRef) [NSURL fileURLWithPath: [paths objectAtIndex: 0]];
+        CFURLRef url = (CFURLRef) [NSURL fileURLWithPath: paths[0]];
         src = CGImageSourceCreateWithURL(url, NULL);
 /*
     } else if( dragInfo && [[pb types] containsObject:NSFilesPromisePboardType] ) {
@@ -169,19 +169,19 @@ CGImageRef GetCGImageFromPasteboard( NSPasteboard *pb, id<NSDraggingInfo>dragInf
         NSArray *filenames = [dragInfo namesOfPromisedFilesDroppedAtDestination: [NSURL fileURLWithPath: dropDir]];
         NSLog(@"promised files are %@ / %@", dropDir,filenames);
         src = nil; */
-    } else if( [[pb types] containsObject: @"PixadexIconPathPboardType"] ) {
+    } else if( [pb.types containsObject: @"PixadexIconPathPboardType"] ) {
         // Candybar 3 (nee Pixadex) doesn't drag out icons in any normal image type.
         // It does support file-promises, but I couldn't get those to work using the Cocoa APIs.
         // So instead I'm using its custom type that provides the path(s) to its internal ".pxicon" files.
         // The icon is really easy to get from one of these: it's just file's custom icon.
         NSArray *files = [pb propertyListForType: @"PixadexIconPathPboardType"];
         if( files.count == 1 ) {
-            NSString *path = [files objectAtIndex: 0];
+            NSString *path = files[0];
             NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile: path];
             for( NSImageRep *rep in icon.representations ) {
                 if( [rep isKindOfClass: [NSBitmapImageRep class]] ) {
                     [rep retain];   //FIX: This leaks; but if the rep goes away, the CGImage breaks...
-                    return [(NSBitmapImageRep*)rep CGImage];
+                    return ((NSBitmapImageRep*)rep).CGImage;
                 }
             }
         }
@@ -232,12 +232,12 @@ CGImageRef GetScaledImageNamed( NSString *imageName, CGFloat scale )
     if( ! sMap )
         sMap = [[NSMutableDictionary alloc] init];
     
-    NSArray *key = [NSArray arrayWithObjects: imageName, [NSNumber numberWithFloat: scale], nil];
-    CGImageRef image = (CGImageRef) [sMap objectForKey: key];
+    NSArray *key = @[imageName, [NSNumber numberWithFloat: scale]];
+    CGImageRef image = (CGImageRef) sMap[key];
     if( ! image ) {
         // Hasn't been cached yet, so load it:
         image = CreateScaledImage(GetCGImageNamed(imageName), scale);
-        [sMap setObject: (id)image forKey: key];
+        sMap[key] = (id)image;
         CGImageRelease(image);
     }
     return image;

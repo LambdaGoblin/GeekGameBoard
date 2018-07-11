@@ -33,12 +33,12 @@
 {
     Piece *p = [[Piece alloc] initWithImageNamed: (playerNumber ? @"O.tiff" :@"X.tiff")
                                            scale: 80];
-    p.owner = [self.players objectAtIndex: playerNumber];
+    p.owner = (self.players)[playerNumber];
     p.name = (playerNumber ?@"O" :@"X");
     return [p autorelease];
 }
 
-- (id) init
+- (instancetype) init
 {
     self = [super init];
     if (self != nil) {

@@ -10,12 +10,18 @@
 #import "Game.h"
 #import "GGBUtils.h"
 
+@interface Player ()
+- (instancetype) init NS_DESIGNATED_INITIALIZER;
+@end
 
 #pragma mark -
 @implementation Player
 
+- (instancetype) init {
+    return [super init];
+}
 
-- (id) initWithGame: (Game*)game
+- (instancetype) initWithGame: (Game*)game
 {
     self = [super init];
     if (self != nil) {
@@ -25,7 +31,7 @@
     return self;
 }
 
-- (id) initWithName: (NSString*)name
+- (instancetype) initWithName: (NSString*)name
 {
     self = [super init];
     if (self != nil) {
@@ -35,7 +41,7 @@
 }
 
 
-- (id) initWithCoder: (NSCoder*)decoder
+- (instancetype) initWithCoder: (NSCoder*)decoder
 {
     self = [self init];
     if( self ) {
@@ -65,7 +71,7 @@
 
 - (id)valueForUndefinedKey:(NSString *)key
 {
-    return [_extraValues objectForKey: key];
+    return _extraValues[key];
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
@@ -73,7 +79,7 @@
     if( ! _extraValues )
         _extraValues = [[NSMutableDictionary alloc] init];
     if( value )
-        [_extraValues setObject: value forKey: key];
+        _extraValues[key] = value;
     else
         [_extraValues removeObjectForKey: key];
 }
@@ -93,7 +99,7 @@
 - (BOOL) isFriendly     {return self == _game.currentPlayer;}   // could be overridden for games with partners
 - (BOOL) isUnfriendly   {return ! self.friendly;}
 
-+ (NSArray*) keyPathsForValuesAffectingCurrent {return [NSArray arrayWithObject: @"game.currentPlayer"];}
++ (NSArray*) keyPathsForValuesAffectingCurrent {return @[@"game.currentPlayer"];}
 
 
 - (NSInteger) index
@@ -103,12 +109,12 @@
 
 - (Player*) nextPlayer
 {
-    return [_game.players objectAtIndex: (self.index+1) % _game.players.count];
+    return (_game.players)[(self.index+1) % _game.players.count];
 }
 
 - (Player*) previousPlayer
 {
-    return [_game.players objectAtIndex: (self.index-1) % _game.players.count];
+    return (_game.players)[(self.index-1) % _game.players.count];
 }
 
 - (CGImageRef) icon

@@ -43,13 +43,13 @@
     return sSpots;
 }
 
-- (id) init
+- (instancetype) init
 {
     self = [super init];
     if (self != nil) {
         [self setNumberOfPlayers: 2];
-        [(Player*)[_players objectAtIndex: 0] setName: @"Black"];
-        [(Player*)[_players objectAtIndex: 1] setName: @"White"];
+        ((Player*)_players[0]).name = @"Black";
+        ((Player*)_players[1]).name = @"White";
     }
     return self;
 }
@@ -122,7 +122,7 @@
     NSString *imageName = index ?@"ball-white.png" :@"ball-black.png";
     CGFloat pieceSize = (int)(_board.spacing.width * 1.0) & ~1;  // make sure it's even
     Piece *stone = [[Piece alloc] initWithImageNamed: imageName scale: pieceSize];
-    stone.owner = [self.players objectAtIndex: index];
+    stone.owner = (self.players)[index];
     return [stone autorelease];
 }
 
@@ -228,7 +228,7 @@
 {
     //NSLog(@"Go: setStateString: '%@'",state);
     NSArray *components = [state componentsSeparatedByString: @","];
-    state = [components objectAtIndex: 0];
+    state = components[0];
     int n = _board.rows;
     for( int y=0; y<n; y++ )
         for( int x=0; x<n; x++ ) {
@@ -245,7 +245,7 @@
     if( components.count < 3 )
         components = nil;
     for( int player=0; player<=1; player++ ) {
-        NSUInteger nCaptured = [[components objectAtIndex: 1+player] intValue];
+        NSUInteger nCaptured = [components[1+player] intValue];
         NSUInteger curNCaptured = _captured[player].numberOfBits;
         if( nCaptured < curNCaptured )
            _captured[player].numberOfBits = nCaptured;

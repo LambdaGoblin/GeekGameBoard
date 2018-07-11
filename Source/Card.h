@@ -41,7 +41,7 @@
 + (CGSize) cardSize;
 + (void) setCardSize: (CGSize)size;
 
-- (id) initWithSerialNumber: (NSInteger)serial position: (CGPoint)pos;
+- (instancetype) initWithSerialNumber: (NSInteger)serial position: (CGPoint)pos NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) NSInteger serialNumber;
 
@@ -54,11 +54,11 @@
 /** Creates the sub-layer that displays the front side of the card.
     Subclasses should probably call the superclass method, configure the layer it returns
     (based on the card's serialNumber) and then return that layer. */
-- (GGBLayer*) createFront;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) GGBLayer *createFront;
 
 /** Creates the sub-layer that displays the back side of the card.
     Subclasses should probably call the superclass method, configure the layer it returns and
     return that layer. */
-- (GGBLayer*) createBack;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) GGBLayer *createBack;
 
 @end

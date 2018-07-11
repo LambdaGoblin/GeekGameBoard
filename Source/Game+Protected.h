@@ -20,7 +20,7 @@
 
 /** Should return a string describing the initial state of a new game.
     The default value is an empty string. */
-- (NSString*) initialStateString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *initialStateString;
 
 
 #pragma mark  Abstract methods for subclasses to implement:
@@ -35,7 +35,7 @@
 
 /** Should return the winning player, if the current position is a win, else nil.
     Default implementation returns nil. */
-- (Player*) checkForWinner;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) Player *checkForWinner;
 
 
 #pragma mark  Protected methods for subclasses to call:

@@ -54,13 +54,13 @@
 
 
 /** Designated initializer: override this if your subclass needs additional initialization. */
-- (id) init;
+- (instancetype) init NS_DESIGNATED_INITIALIZER;
 
 /** Convenience initializer that calls -init, -setTable:, and -nextTurn. */
-- (id) initNewGameWithTable: (GGBLayer*)table;
+- (instancetype) initNewGameWithTable: (GGBLayer*)table;
 
 /** NSCoding initializer. Calls -init, but then restores saved payers, states, moves. */
-- (id) initWithCoder: (NSCoder*)decoder;
+- (instancetype) initWithCoder: (NSCoder*)decoder;
 
 /** NSCoding method to save Game to an archive. */
 - (void) encodeWithCoder: (NSCoder*)coder;
@@ -90,7 +90,7 @@
 #pragma mark  Methods for subclasses to implement:
 
 /** An icon for a player (usually the same as the image of the player's pieces.) */
-- (CGImageRef) iconForPlayer: (NSInteger)playerIndex;
+- (CGImageRef) iconForPlayer: (NSInteger)playerIndex CF_RETURNS_NOT_RETAINED;
 
 
 /** Should return YES if it is legal for the given bit to be moved from its current holder.

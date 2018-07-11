@@ -39,7 +39,7 @@
 }
 
 
-- (id) init
+- (instancetype) init
 {
     self = [super init];
     if (self != nil)
@@ -139,7 +139,7 @@
 - (BOOL) canBit: (Bit*)bit moveFrom: (id<BitHolder>)src
 {
     if( [bit isKindOfClass: [DraggedStack class]] ) {
-        Card *bottomSrc = [[(DraggedStack*)bit bits] objectAtIndex: 0];
+        Card *bottomSrc = ((DraggedStack*)bit).bits[0];
         if( ! bottomSrc.faceUp )
             return NO;
     }
@@ -155,7 +155,7 @@
     // Find the bottom card being moved, and the top card it's moving onto:
     PlayingCard *bottomSrc;
     if( [bit isKindOfClass: [DraggedStack class]] )
-        bottomSrc = [[(DraggedStack*)bit bits] objectAtIndex: 0];
+        bottomSrc = ((DraggedStack*)bit).bits[0];
     else
         bottomSrc = (PlayingCard*)bit;
     

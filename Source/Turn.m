@@ -15,6 +15,7 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
 
 
 @interface Turn ()
+- (instancetype) init NS_DESIGNATED_INITIALIZER;
 @property (copy) NSString *move, *boardState;
 @property (retain) NSDate *date;
 @end
@@ -23,8 +24,11 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
 
 @implementation Turn
 
+- (instancetype) init {
+    return [super init];
+}
 
-- (id) initWithPlayer: (Player*)player
+- (instancetype) initWithPlayer: (Player*)player
 {
     NSParameterAssert(player!=nil);
     self = [super init];
@@ -37,7 +41,7 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
     return self;
 }
 
-- (id) initStartOfGame: (Game*)game
+- (instancetype) initStartOfGame: (Game*)game
 {
     NSParameterAssert(game!=nil);
     self = [super init];
@@ -51,7 +55,7 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
 }
 
 
-- (id) initWithCoder: (NSCoder*)decoder
+- (instancetype) initWithCoder: (NSCoder*)decoder
 {
     self = [self init];
     if( self ) {
@@ -99,7 +103,7 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
 
 - (NSUInteger) turnNumber { return [_game.turns indexOfObjectIdenticalTo: self]; }
 - (BOOL) isLatestTurn { return _game.turns.lastObject == self; }
-- (Player*) nextPlayer { return _player ? _player.nextPlayer : [_game.players objectAtIndex: 0]; }
+- (Player*) nextPlayer { return _player ? _player.nextPlayer : (_game.players)[0]; }
 - (TurnStatus) status { return _status; }
 
 - (void) setStatus: (TurnStatus)status
@@ -143,7 +147,7 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
 {
     NSUInteger n = self.turnNumber;
     if( n > 0 )
-        return [_game.turns objectAtIndex: n-1];
+        return (_game.turns)[n-1];
     else
         return nil;
 }
@@ -152,7 +156,7 @@ NSString* const kTurnCompleteNotification = @"TurnComplete";
 {
     NSUInteger n = self.turnNumber;
     if( n+1 < _game.turns.count )
-        return [_game.turns objectAtIndex: n+1];
+        return (_game.turns)[n+1];
     else
         return nil;
 }

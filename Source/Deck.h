@@ -32,10 +32,10 @@
 }
 
 /** Creates an empty Deck. */
-- (id) init;
+- (instancetype) init NS_DESIGNATED_INITIALIZER;
 
 /** Creates a Deck populated with a full set of cards (in order.) */
-- (id) initWithCardsOfClass: (Class)klass;
+- (instancetype) initWithCardsOfClass: (Class)klass;
 
 @property (readonly) NSArray *cards;
 @property (readonly) Card *topCard;             // same as the -bit property
@@ -51,7 +51,7 @@
 - (void) addCardAtRandom: (Card*)card;
 - (void) addCards: (NSArray*)cards;
 
-- (Card*) removeTopCard;
-- (NSArray*) removeAllCards;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) Card *removeTopCard;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *removeAllCards;
 
 @end

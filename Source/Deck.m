@@ -36,7 +36,7 @@
 @implementation Deck
 
 
-- (id) init
+- (instancetype) init
 {
     self = [super init];
     if (self != nil) {
@@ -49,7 +49,7 @@
     return self;
 }
 
-- (id) initWithCardsOfClass: (Class)klass
+- (instancetype) initWithCardsOfClass: (Class)klass
 {
     self = [self init];
     if (self != nil) {
@@ -97,7 +97,7 @@
     and no others (they shouldn't even be in the layer tree, for performance reasons.) */
 - (void) x_showTopCard
 {
-    Card *curTopCard = [_cards lastObject];
+    Card *curTopCard = _cards.lastObject;
     if( curTopCard != _bit ) {
         if( _bit ) {
             // Remove card that used to be the top one
@@ -129,7 +129,7 @@
     NSMutableArray *shuffled = [NSMutableArray arrayWithCapacity: n];
     for( ; n > 0; n-- ) {
         NSInteger i = random() % n;
-        Card *card = [_cards objectAtIndex: i];
+        Card *card = _cards[i];
         [shuffled addObject: card];
         [_cards removeObjectAtIndex: i];
     }
@@ -143,7 +143,7 @@
     NSInteger n = _cards.count;
     NSMutableArray *flipped = [NSMutableArray arrayWithCapacity: n];
     while( --n >= 0 ) {
-        Card *card = [_cards objectAtIndex: n];
+        Card *card = _cards[n];
         card.faceUp = ! card.faceUp;
         [flipped addObject: card];
     }
@@ -187,7 +187,7 @@
 {
     if( [bit isKindOfClass: [DraggedStack class]] ) {
         // Convert a DraggedStack back to a group of Cards:
-        for( Bit *subBit in [(DraggedStack*)bit bits] )
+        for( Bit *subBit in ((DraggedStack*)bit).bits )
             if( ! [self addBit: subBit] )
                 return NO;
         return YES;
@@ -201,7 +201,7 @@
 
 - (Card*) removeTopCard
 {
-    Card *card = [_cards lastObject];
+    Card *card = _cards.lastObject;
     if( card ) {
         [[card retain] autorelease];
         [_cards removeLastObject];
@@ -248,7 +248,7 @@
 
 - (void) setHighlighted: (BOOL)h    
 {
-    [super setHighlighted: h];
+    super.highlighted = h;
     self.borderWidth = h ?6 :0;
 }
 

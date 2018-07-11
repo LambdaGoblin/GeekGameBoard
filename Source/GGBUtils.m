@@ -44,7 +44,7 @@ void setObjCopy( id<NSCopying> *variable, id<NSCopying> newValue )
 void DelayFor( NSTimeInterval interval )
 {
     NSDate *end = [NSDate dateWithTimeIntervalSinceNow: interval];
-    while( [end timeIntervalSinceNow] > 0 ) {
+    while( end.timeIntervalSinceNow > 0 ) {
         if( ! [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate: end] )
             break;
     }
@@ -54,7 +54,7 @@ void DelayFor( NSTimeInterval interval )
 static SystemSoundID GetSound( NSString *name )
 {
     static NSMutableDictionary *sSoundIDs;
-    NSNumber *soundIDObj = [sSoundIDs objectForKey: name];
+    NSNumber *soundIDObj = sSoundIDs[name];
     if( ! soundIDObj ) {
         NSLog(@"Loading sound '%@'",name);
         NSString *type = name.pathExtension;
@@ -81,12 +81,12 @@ static SystemSoundID GetSound( NSString *name )
             return 0;
         }
         
-        soundIDObj = [NSNumber numberWithUnsignedInt: soundID];
+        soundIDObj = @(soundID);
         if( ! sSoundIDs )
             sSoundIDs = [[NSMutableDictionary alloc] init];
-        [sSoundIDs setObject: soundIDObj forKey: name];
+        sSoundIDs[name] = soundIDObj;
     }
-    return [soundIDObj unsignedIntValue];
+    return soundIDObj.unsignedIntValue;
 }
 
 

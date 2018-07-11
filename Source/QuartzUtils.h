@@ -46,24 +46,24 @@ CGColorRef CreateRGB(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha);
     Loaded images/patterns are cached in memory, so subsequent calls with the same name
     are very fast.
     The caller must NOT release the result, since it's retained in the cache. */
-CGImageRef GetCGImageNamed( NSString *name );
-CGColorRef GetCGPatternNamed( NSString *name );
+CGImageRef GetCGImageNamed( NSString *name ) CF_RETURNS_NOT_RETAINED;
+CGColorRef GetCGPatternNamed( NSString *name ) CF_RETURNS_NOT_RETAINED;
 
 #if ! TARGET_OS_IPHONE
 /** Is it possible to read a CGImage from this pasteboard? */
 BOOL CanGetCGImageFromPasteboard( NSPasteboard *pb );
 /** Loads image data from the pasteboard into a CGImage. */
-CGImageRef GetCGImageFromPasteboard( NSPasteboard *pb, id<NSDraggingInfo>dragInfo );
+CGImageRef GetCGImageFromPasteboard( NSPasteboard *pb, id<NSDraggingInfo>dragInfo ) CF_RETURNS_NOT_RETAINED;
 #endif
 
-CGImageRef CreateScaledImage( CGImageRef srcImage, CGFloat scale );
-CGImageRef GetScaledImageNamed( NSString *imageName, CGFloat scale );
+CGImageRef CreateScaledImage( CGImageRef srcImage, CGFloat scale ) CF_RETURNS_RETAINED;
+CGImageRef GetScaledImageNamed( NSString *imageName, CGFloat scale ) CF_RETURNS_NOT_RETAINED;
 
 /** Creates a CGPattern from a CGImage. Caller must release it. */
-CGPatternRef CreateImagePattern( CGImageRef image );
+CGPatternRef CreateImagePattern( CGImageRef image ) CF_RETURNS_RETAINED;
 
 /** Creates a CGColor that draws the given CGImage as a pattern. Caller must release it. */
-CGColorRef CreatePatternColor( CGImageRef image );
+CGColorRef CreatePatternColor( CGImageRef image ) CF_RETURNS_RETAINED;
 
 /** Returns the alpha value of a single pixel in a CGImage, scaled to a particular size. */
 float GetPixelAlpha( CGImageRef image, CGSize imageSize, CGPoint pt );

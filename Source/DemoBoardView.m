@@ -42,7 +42,7 @@ static NSString* sCurrentGameName = @"CheckersGame";
 - (IBAction) toggleRemoteOpponent: (id)sender
 {
     NSAssert(self.game.currentTurnNo==0,@"Game has already begun");
-    Player *opponent = [self.game.players objectAtIndex: 1];
+    Player *opponent = (self.game.players)[1];
     opponent.local = !opponent.local;
 }
 
@@ -87,7 +87,7 @@ static NSString* sCurrentGameName = @"CheckersGame";
     
     // BoardView supports receiving dragged images, but you have to register for them:
     [self registerForDraggedTypes: [NSImage imageTypes]];
-    [self registerForDraggedTypes: [NSArray arrayWithObject: NSFilenamesPboardType]];
+    [self registerForDraggedTypes: @[NSFilenamesPboardType]];
     
     CGRect bounds = self.layer.bounds;
     self.layer.backgroundColor = GetCGPatternNamed(@"Background.png");

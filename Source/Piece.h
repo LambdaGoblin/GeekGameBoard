@@ -35,7 +35,7 @@
     If scale is 0.0, the image's natural size will be used.
     If 0.0 < scale < 4.0, the image will be scaled by that factor.
     If scale >= 4.0, it will be used as the size to scale the maximum dimension to. */
-- (id) initWithImageNamed: (NSString*)imageName
+- (instancetype) initWithImageNamed: (NSString*)imageName
                     scale: (CGFloat)scale;
 
 - (void) setImageNamed: (NSString*)imageName scale: (CGFloat)scale;

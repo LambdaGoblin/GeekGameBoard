@@ -27,7 +27,7 @@
 @implementation Stack
 
 
-- (id) initWithStartPos: (CGPoint)startPos spacing: (CGSize)spacing
+- (instancetype) initWithStartPos: (CGPoint)startPos spacing: (CGSize)spacing
            wrapInterval: (int)wrapInterval wrapSpacing: (CGSize)wrapSpacing
 {
     self = [super init];
@@ -44,7 +44,7 @@
     return self;
 }
 
-- (id) initWithStartPos: (CGPoint)startPos spacing: (CGSize)spacing;
+- (instancetype) initWithStartPos: (CGPoint)startPos spacing: (CGSize)spacing;
 {
     return [self initWithStartPos: startPos spacing: spacing 
                      wrapInterval: INT_MAX wrapSpacing: CGSizeZero];
@@ -77,7 +77,7 @@
 
 - (Bit*) topBit
 {
-    return [_bits lastObject];
+    return _bits.lastObject;
 }
 
 
@@ -85,7 +85,7 @@
 {
     printf("Stack = ");
     for( GGBLayer *layer in self.sublayers )
-        printf("%s @z=%g   ", [[layer description] UTF8String],layer.zPosition);
+        printf("%s @z=%g   ", layer.description.UTF8String,layer.zPosition);
     printf("\n");
 }
 
@@ -99,7 +99,7 @@
 - (void) addBit: (Bit*)bit
 {
     if( [bit isKindOfClass: [DraggedStack class]] ) {
-        for( Bit *subBit in [(DraggedStack*)bit bits] )
+        for( Bit *subBit in ((DraggedStack*)bit).bits )
             [self addBit: subBit];
     } else {
         NSInteger n = _bits.count;
@@ -122,7 +122,7 @@
 
 - (void) setHighlighted: (BOOL)highlighted
 {
-    [super setHighlighted: highlighted];
+    super.highlighted = highlighted;
     self.borderWidth = (highlighted ?6 :0);
 }
 
@@ -183,7 +183,7 @@
 @implementation DraggedStack
 
 
-- (id) initWithBits: (NSArray*)bits
+- (instancetype) initWithBits: (NSArray*)bits
 {
     self = [super init];
     if( self ) {

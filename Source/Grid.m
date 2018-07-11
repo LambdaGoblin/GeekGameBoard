@@ -36,7 +36,7 @@
 @implementation Grid
 
 
-- (id) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
+- (instancetype) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
             spacing: (CGSize)spacing
            position: (CGPoint)pos
 {
@@ -70,7 +70,7 @@
 }
 
 
-- (id) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
+- (instancetype) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
               frame: (CGRect)frame
 {
     CGFloat spacing = floor(MIN( (frame.size.width -2)/(CGFloat)nColumns,
@@ -130,7 +130,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
 - (GridCell*) cellAtRow: (unsigned)row column: (unsigned)col
 {
     if( row < _nRows && col < _nColumns ) {
-        id cell = [_cells objectAtIndex: row*_nColumns+col];
+        id cell = _cells[row*_nColumns+col];
         if( cell != [NSNull null] )
             return cell;
     }
@@ -155,7 +155,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
     NSParameterAssert(row<_nRows);
     NSParameterAssert(col<_nColumns);
     unsigned index = row*_nColumns+col;
-    GridCell *cell = [_cells objectAtIndex: index];
+    GridCell *cell = _cells[index];
     if( (id)cell == [NSNull null] ) {
         unsigned effectiveRow=row, effectiveCol=col;
         if( _reversed ) {
@@ -166,7 +166,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
                                   _spacing.width,_spacing.height);
         cell = [self createCellAtRow: row column: col suggestedFrame: frame];
         if( cell ) {
-            [_cells replaceObjectAtIndex: index withObject: cell];
+            _cells[index] = cell;
             if( _reversed )
                 [self addSublayer: cell];
             else
@@ -191,10 +191,10 @@ static void setcolor( CGColorRef *var, CGColorRef color )
     NSParameterAssert(row<_nRows);
     NSParameterAssert(col<_nColumns);
     unsigned index = row*_nColumns+col;
-    id cell = [_cells objectAtIndex: index];
+    id cell = _cells[index];
     if( cell != [NSNull null] )
         [cell removeFromSuperlayer];
-    [_cells replaceObjectAtIndex: index withObject: [NSNull null]];
+    _cells[index] = [NSNull null];
     [self setNeedsDisplay];
 }
 
@@ -203,7 +203,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
 {
     NSMutableArray *cells = [[_cells mutableCopy] autorelease];
     for( NSInteger i=cells.count-1; i>=0; i-- )
-        if( [cells objectAtIndex: i] == [NSNull null] )
+        if( cells[i] == [NSNull null] )
             [cells removeObjectAtIndex: i];
     return cells;
 }
@@ -353,7 +353,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
 @implementation GridCell
 
 
-- (id) initWithGrid: (Grid*)grid 
+- (instancetype) initWithGrid: (Grid*)grid 
                 row: (unsigned)row column: (unsigned)col
               frame: (CGRect)frame
 {
@@ -410,7 +410,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
 - (void) setBit: (Bit*)bit
 {
     if( bit != self.bit ) {
-        [super setBit: bit];
+        super.bit = bit;
         if( bit )
             bit.position = GetCGRectCenter(self.bounds);
     }
@@ -522,7 +522,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
 @implementation RectGrid
 
 
-- (id) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
+- (instancetype) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
             spacing: (CGSize)spacing
            position: (CGPoint)pos
 {
@@ -563,7 +563,7 @@ static void setcolor( CGColorRef *var, CGColorRef color )
 
 - (void) setHighlighted: (BOOL)highlighted
 {
-    [super setHighlighted: highlighted];
+    super.highlighted = highlighted;
     self.cornerRadius = self.bounds.size.width/2.0;
     self.borderWidth = (highlighted ?6 :0);
 }

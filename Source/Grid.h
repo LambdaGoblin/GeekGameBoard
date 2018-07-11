@@ -44,14 +44,14 @@ typedef struct {
 
 /** Initializes a new Grid with the given dimensions and cell size, and position in superview.
     Note that a new Grid has no cells! Either call -addAllCells, or -addCellAtRow:column:. */
-- (id) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
+- (instancetype) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
             spacing: (CGSize)spacing
-           position: (CGPoint)pos;
+           position: (CGPoint)pos NS_DESIGNATED_INITIALIZER;
 
 /** Initializes a new Grid with the given dimensions and frame in superview.
     The cell size will be computed by dividing frame size by dimensions.
     Note that a new Grid has no cells! Either call -addAllCells, or -addCellAtRow:column:. */
-- (id) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
+- (instancetype) initWithRows: (unsigned)nRows columns: (unsigned)nColumns
               frame: (CGRect)frame;
 
 @property (assign) Class cellClass;             // What kind of GridCells to create
@@ -85,7 +85,7 @@ typedef struct {
 
 /** Returns all of the Players who have any Bits on the grid, with each Player's count being the
     number of Bits. */
-- (NSCountedSet*) countPiecesByPlayer;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSCountedSet *countPiecesByPlayer;
 
 
 /** Utility to get and set the entire state of the Grid. The stateString is made by concatenating
@@ -112,9 +112,9 @@ typedef struct {
     unsigned _row, _column;
 }
 
-- (id) initWithGrid: (Grid*)grid 
+- (instancetype) initWithGrid: (Grid*)grid 
                 row: (unsigned)row column: (unsigned)col
-              frame: (CGRect)frame;
+              frame: (CGRect)frame NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) Grid* grid;
 @property (readonly) unsigned row, column;

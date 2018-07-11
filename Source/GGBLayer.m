@@ -88,13 +88,13 @@ NSString* const GGBLayerStyleChangedNotification = @"GGBLayerStyleChanged";
                                                        object: style];
         setObj(&_styleDict,style);
     }
-    [super setStyle: style];
+    super.style = style;
 }
 
 - (void) _styleChanged
 {
     // Reapply the style, so any changes in the dict will take effect.
-    [super setStyle: _styleDict];
+    super.style = _styleDict;
 }
 
 - (void) dealloc
@@ -110,10 +110,10 @@ NSString* const GGBLayerStyleChangedNotification = @"GGBLayerStyleChanged";
 - (void) setValue: (id)value ofStyleProperty: (NSString*)prop
 {
     if( _styleDict ) {
-        id oldValue = [_styleDict objectForKey: prop];
+        id oldValue = _styleDict[prop];
         if( oldValue != value ) {
             if( value )
-                [_styleDict setObject: value forKey: prop];
+                _styleDict[prop] = value;
             else
                 [_styleDict removeObjectForKey: prop];
             [[NSNotificationCenter defaultCenter] postNotificationName: GGBLayerStyleChangedNotification

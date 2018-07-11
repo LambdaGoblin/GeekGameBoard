@@ -27,7 +27,7 @@
 @implementation Piece
 
 
-- (id) init
+- (instancetype) init
 {
     self = [super init];
     if (self != nil) {
@@ -38,7 +38,7 @@
 
 
 
-- (id) initWithImageNamed: (NSString*)imageName
+- (instancetype) initWithImageNamed: (NSString*)imageName
                     scale: (CGFloat)scale
 {
     self = [self init];

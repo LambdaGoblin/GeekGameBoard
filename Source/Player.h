@@ -19,10 +19,10 @@
     NSMutableDictionary *_extraValues;
 }
 
-- (id) initWithGame: (Game*)game;
-- (id) initWithName: (NSString*)name;
+- (instancetype) initWithGame: (Game*)game NS_DESIGNATED_INITIALIZER;
+- (instancetype) initWithName: (NSString*)name NS_DESIGNATED_INITIALIZER;
 
-- (id) initWithCoder: (NSCoder*)decoder;
+- (instancetype) initWithCoder: (NSCoder*)decoder;
 - (void) encodeWithCoder: (NSCoder*)coder;
 
 @property (copy) NSString *name;                            // Display name

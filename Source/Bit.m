@@ -76,7 +76,7 @@
 
 - (void) setScale: (CGFloat)scale
 {
-    [self setValue: [NSNumber numberWithFloat: scale]
+    [self setValue: @(scale)
         forKeyPath: @"transform.scale"];
 }
 
@@ -95,7 +95,7 @@
 
 - (void) setRotation: (int)rotation
 {
-    [self setValue: [NSNumber numberWithDouble: rotation*M_PI/180.0]
+    [self setValue: @(rotation*M_PI/180.0)
         forKeyPath: @"transform.rotation"];
 }
 

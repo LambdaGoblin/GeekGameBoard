@@ -67,6 +67,6 @@ void RemoveImmediately( CALayer *layer );
 void BeginDisableAnimations(void);
 void EndDisableAnimations(void);
 
-CGColorRef GetEffectiveBackground( CALayer *layer );
+CGColorRef GetEffectiveBackground( CALayer *layer ) CF_RETURNS_NOT_RETAINED;
 
 NSString* StringFromTransform3D( CATransform3D xform );

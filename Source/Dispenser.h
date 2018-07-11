@@ -31,7 +31,7 @@
     unsigned _quantity;
 }
 
-- (id) initWithPrototype: (Bit*)prototype quantity: (unsigned)quantity frame: (CGRect)frame;
+- (instancetype) initWithPrototype: (Bit*)prototype quantity: (unsigned)quantity frame: (CGRect)frame NS_DESIGNATED_INITIALIZER;
 
 /** The Bit that will be copied. */
 @property (retain) Bit *prototype;

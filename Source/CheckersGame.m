@@ -52,7 +52,7 @@ static NSMutableDictionary *kPieceStyle1, *kPieceStyle2;
 }
 
 
-- (id) init
+- (instancetype) init
 {
     self = [super init];
     if (self != nil) {
@@ -78,7 +78,7 @@ static NSMutableDictionary *kPieceStyle1, *kPieceStyle2;
     Piece *p = [[Piece alloc] init];
     p.bounds = CGRectMake(0,0,floor(_board.spacing.width),floor(_board.spacing.height));
     p.style = (playerNum ?kPieceStyle2 :kPieceStyle1);
-    p.owner = [self.players objectAtIndex: playerNum];
+    p.owner = (self.players)[playerNum];
     p.name = playerNum ?@"2" :@"1";
     [self _transformPiece: p];
     return [p autorelease];
@@ -118,7 +118,7 @@ static NSMutableDictionary *kPieceStyle1, *kPieceStyle2;
     board.cellColor    = CreateGray(0.0, 0.5);
     board.altCellColor = CreateGray(1.0, 0.25);
     board.lineColor = nil;
-    board.reversed = ! [[self.players objectAtIndex: 0] isLocal];
+    board.reversed = ! [(self.players)[0] isLocal];
 
     for( int i=0; i<32; i++ ) {
         int row = i/4;
@@ -180,7 +180,7 @@ static NSMutableDictionary *kPieceStyle1, *kPieceStyle2;
     // Check for a capture:
     NSArray *line = [src lineToCell: dst inclusive: NO];
     if( line.count==1 ) {
-        Square *capture = [line objectAtIndex: 0];
+        Square *capture = line[0];
         [capture destroyBit];
         [turn addToMove: @"!"];
         PlaySound(@"Pop");

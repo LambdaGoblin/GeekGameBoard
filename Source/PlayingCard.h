@@ -22,24 +22,24 @@
 */
 #import "Card.h"
 
-typedef enum {
+typedef NS_ENUM(unsigned int, CardSuit) {
     kSuitClubs = 0,
     kSuitDiamonds,
     kSuitHearts,
     kSuitSpades
-} CardSuit;
+};
 
-typedef enum {
+typedef NS_ENUM(unsigned int, CardColor) {
     kColorRed = 0,
     kColorBlack = 1
-} CardColor;
+};
 
-typedef enum {
+typedef NS_ENUM(unsigned int, CardRank) {
     kRankAce = 1,
     kRankJack = 11,
     kRankQueen = 12,
     kRankKing = 13
-} CardRank;
+};
 
 
 /* A standard Western playing card. Serial numbers go from 1..52. */

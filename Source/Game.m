@@ -35,7 +35,7 @@
 @implementation Game
 
 
-- (id) init
+- (instancetype) init
 {
     self = [super init];
     if (self != nil) {
@@ -45,7 +45,7 @@
 }
 
 
-- (id) initWithCoder: (NSCoder*)decoder
+- (instancetype) initWithCoder: (NSCoder*)decoder
 {
     self = [self init];
     if( self ) {
@@ -68,7 +68,7 @@
 }
 
 
-- (id) initNewGameWithTable: (GGBLayer*)board
+- (instancetype) initNewGameWithTable: (GGBLayer*)board
 {
     self = [self init];
     if( self ) {
@@ -94,7 +94,7 @@
 
 - (id)valueForUndefinedKey:(NSString *)key
 {
-    return [_extraValues objectForKey: key];
+    return _extraValues[key];
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
@@ -102,7 +102,7 @@
     if( ! _extraValues )
         _extraValues = [[NSMutableDictionary alloc] init];
     if( value )
-        [_extraValues setObject: value forKey: key];
+        _extraValues[key] = value;
     else
         [_extraValues removeObjectForKey: key];
 }
@@ -137,7 +137,7 @@
         [self setUpBoard];
         
         // Re-apply the current state to set up the pieces/cards:
-        self.stateString = [[_turns objectAtIndex: _currentTurnNo] boardState];
+        self.stateString = [_turns[_currentTurnNo] boardState];
         
         EndDisableAnimations();
     }
@@ -201,7 +201,7 @@
     return self.currentTurn.player;
 }
 
-+ (NSArray*) keyPathsForValuesAffectingCurrentPlayer {return [NSArray arrayWithObject: @"currentTurn"];}
++ (NSArray*) keyPathsForValuesAffectingCurrentPlayer {return @[@"currentTurn"];}
 
 
 #pragma mark -
@@ -210,21 +210,21 @@
 
 - (Turn*) currentTurn
 {
-    return [_turns objectAtIndex: _currentTurnNo];
+    return _turns[_currentTurnNo];
 }
 
 - (Turn*) latestTurn
 {
-    return [_turns lastObject];
+    return _turns.lastObject;
 }
 
-+ (NSArray*) keyPathsForValuesAffectingCurrentTurn {return [NSArray arrayWithObject: @"currentTurnNo"];}
-+ (NSArray*) keyPathsForValuesAffectingLatestTurn  {return [NSArray arrayWithObject: @"turns"];}
++ (NSArray*) keyPathsForValuesAffectingCurrentTurn {return @[@"currentTurnNo"];}
++ (NSArray*) keyPathsForValuesAffectingLatestTurn  {return @[@"turns"];}
 
 
 - (void) _startTurn
 {
-    Turn *lastTurn = [_turns lastObject];
+    Turn *lastTurn = _turns.lastObject;
     NSAssert(lastTurn.status==kTurnFinished,@"Can't _startTurn till previous turn is finished");
     Turn *newTurn = [[Turn alloc] initWithPlayer: lastTurn.nextPlayer];
     
@@ -307,8 +307,8 @@
     return _turns.count-1;
 }
 
-+ (NSArray*) keyPathsForValuesAffectingIsLatestTurn {return [NSArray arrayWithObjects: @"currentTurnNo",@"turns",nil];}
-+ (NSArray*) keyPathsForValuesAffectingMaxTurnNo    {return [NSArray arrayWithObjects: @"turns",nil];}
++ (NSArray*) keyPathsForValuesAffectingIsLatestTurn {return @[@"currentTurnNo",@"turns"];}
++ (NSArray*) keyPathsForValuesAffectingMaxTurnNo    {return @[@"turns"];}
 
 - (NSInteger) currentTurnNo
 {
@@ -326,7 +326,7 @@
     NSUInteger oldTurnNo = _currentTurnNo;
     if( turnNo != oldTurnNo ) {
         if( _table ) {
-            Turn *turn = [_turns objectAtIndex: turnNo];
+            Turn *turn = _turns[turnNo];
             NSString *state;
             if( turn.status == kTurnEmpty )
                 state = turn.previousTurn.boardState;
